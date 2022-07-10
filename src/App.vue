@@ -1,54 +1,77 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import HelloWorld from './components/HelloWorld.vue'
-import Test from './components/Test'
 
-const confirm = () => {
-  console.log('confirm!!!')
+import { reactive } from 'vue'
+
+// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
+const tree = [
+  {
+    label: 'docs',
+    id: 'docs'
+  },
+  {
+    label: 'packages',
+    id: 'packages',
+    expanded: true,
+    children: [
+      {
+        label: 'plugin-vue',
+        id: 'plugin-vue'
+      },
+      {
+        label: 'vite',
+        id: 'vite',
+        expanded: true,
+        children: [
+          {
+            label: 'src',
+            id: 'src'
+          },
+          {
+            label: 'README.md',
+            id: 'README.md'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    label: 'scripts',
+    id: 'scripts',
+    children: [
+      {
+        label: 'release.ts',
+        id: 'release.ts'
+      },
+      {
+        label: 'verifyCommit.ts',
+        id: 'verifyCommit.ts'
+      }
+    ]
+  },
+  {
+    label: 'pnpm-workspace.yaml',
+    id: 'pnpm-workspace.yaml'
+  }
+]
+const TreeData = reactive(tree)
+const handleClick = (e: MouseEvent) => {
+  console.log(e)
 }
 </script>
 
 <template>
-  <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
-  <HelloWorld msg="Hello Sheep UI" />
-  <!-- <Test>
-    <template #default> aaaa </template>
-    <template #title><h3>title</h3></template>
-  </Test> -->
-  <!-- 1.type:primary,secondary,text -->
-  <div>
-    <SButton type="primary">确定</SButton>
-    <SButton type="secondary">取消</SButton>
-    <SButton type="text">文本</SButton>
-  </div>
-  <!-- 2.size:small,medium,large -->
-  <div>
-    <SButton type="primary" size="small">small</SButton>
-    <SButton type="primary" size="medium">medium</SButton>
-    <SButton type="primary" size="large">large</SButton>
-  </div>
-  <div>
-    <SButton type="secondary" size="small">small</SButton>
-    <SButton type="secondary" size="medium">medium</SButton>
-    <SButton type="secondary" size="large">large</SButton>
-  </div>
-  <!-- 3. disabled -->
-  <div>
-    <SButton type="primary" @click="confirm">确定</SButton>
-    <SButton type="primary" disabled @click="confirm">disabled</SButton>
-  </div>
-  <div>
-    <SButton type="secondary" @click="confirm">确定</SButton>
-    <SButton type="secondary" disabled @click="confirm">disabled</SButton>
-  </div>
-  <div>
-    <SButton type="text" @click="confirm">确定</SButton>
-    <SButton type="text" disabled @click="confirm">disabled</SButton>
-  </div>
-  <!-- 4.block -->
-  <SButton type="primary" block>Confirm</SButton>
-  <SButton type="secondary" block>Cancel</SButton>
+  <STrigger
+    :default-popup-visible="true"
+    trigger="click"
+    :unmount-on-close="true"
+  >
+    <STree :data="TreeData" />
+    <SButton @click="handleClick">Click me</SButton>
+    <template #content>
+      <div class="demo-basic">luanhanxiao is a good man</div>
+    </template>
+  </STrigger>
 </template>
 
 <style>
@@ -59,5 +82,12 @@ const confirm = () => {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.demo-basic {
+  padding: 10px;
+  width: 200px;
+  background-color: var(--color-bg-popup);
+  border-radius: 4px;
+  box-shadow: 0 2px 8px #00000026;
 }
 </style>

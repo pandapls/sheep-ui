@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
-const fs = require('fs')
+const fs = require('fs-extra')
 // 引入vite导出的build方法，用它来创建
 const { defineConfig, build } = require('vite')
 const vue = require('@vitejs/plugin-vue')
 const vueJsx = require('@vitejs/plugin-vue-jsx')
 const fsExtra = require('fs-extra')
-
+const version = require('../package.json').version
 // 基础配置
 const baseConfig = defineConfig({
   configFile: false,
@@ -36,7 +36,7 @@ const createPackageJson = name => {
   // 预设
   const fileStr = `{
     "name": "${name ? name : 'sheep-ui'}",
-    "version": "0.0.2",
+    "version": "${version}",
     "main": "${name ? 'index.umd.js' : 'sheep-ui.umd.js'}",
     "module": "${name ? 'index.umd.js' : 'sheep-ui.es.js'}",
     "author": "龙浩锋",
